@@ -37,28 +37,35 @@
         </fieldset>
     </form>
 
+    <hr>
+
 </body>
-WWWW
     <?php if(isset($_POST['btnSend']) && isset($_POST['chkDrinks'])){ ?>
         <h3>Product Summary:</h3>
         <ul>
             <?php
-            $arrUserChoice = $_POST['chkDrinks'];WWWW
+            
+            $itemCount = NULL;
+            $arrUserChoice = $_POST['chkDrinks'];
             $size = $_POST['drpSize'];
             $quantity = $_POST['txtQTY'] ;
+
             foreach($arrUserChoice as $key => $value){
                 if($quantity > 1):
-                    echo '<li>'. $quantity . ' pieces of '. $size . ' ' .$value . ' amouting to </li>';
+                    echo '<li>'. $quantity . ' pieces of '. $size . ' ' .$value . ' amouting to ₱' . ($arrDrinks[$value] + $arrSize[$size]). '</li>';
                 else:
-                    echo '<li>'. $quantity . ' piece of '. $size . ' '. $value .' amouting to</li>';
+                    echo '<li>'. $quantity . ' piece of '. $size . ' '. $value .' amouting to ₱'. ($arrDrinks[$value] + $arrSize[$size]). '</li>';
                 endif;
-            }
 
+                $itemCount++;
+            }
             ?>  
         </ul>
         
-        <h4>Total Number of Items: </h4>
-        <h4>Total Amount: </h4>
+        <b>Total Number of Items: </b> <?php echo $quantity * $itemCount; ?> <br>
+        <b>Total Amount: </b>
             
     <?php } ?>
+
+
 </html>

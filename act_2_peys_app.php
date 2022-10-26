@@ -11,23 +11,20 @@
         <label for="ranSize">Select Photo Size</label>
         <input type="range" name="ranSize" id="ranSize" min="0" max="100" value="60"><br>
         <label for="ranSize">Select Border Color</label>
-        <input type="color" name="cpBColor" id="cpBColor" ><br>
+        <input type="color" name="cpBColor" id="cpBColor" ><br><br>
         <button type="submit" name="btnProcess">Process</button><br>
     </form>
 
      
 
     <?php
-        $photoSize;
-        
+        $photoSize = '60';
+        $borderColor = '#000000';
         if(isset($_POST['btnProcess'])){
             $photoSize = $_POST['ranSize'];
             $borderColor = $_POST['cpBColor'];
         }
-        else{
-            $photoSize = '60';
-            $borderColor = '#000000';
-        }
+
         echo '<br>';
         echo '<img src="myPic.jpg" alt="ProfilePic" width="' . $photoSize . '%" style="border: 5px solid ' . $borderColor . ';">';
     
