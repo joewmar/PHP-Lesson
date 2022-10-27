@@ -15,27 +15,25 @@
 ?>
 <body>
     <?php
+        $userType = $_POST['drpPosistion'];
+        $username = $_POST['txtUsername'];
+        $password = $_POST['txtPassword'];
         if(isset($_POST['btnSubmit'])){
-            foreach($arrUserType as $key => $value){
-                if ($_POST['drpPosistion'] == $value && $_POST['txtUsername'] == $key && $_POST['txtPassword'] == arrPassword[$key]):
-                    echo '<div class="alert alert-success alert-dismissible fade show" role="alert">';
-                    echo '<strong>Holy guacamole!</strong> Welcome to System, ' . $key .'.';
-                    echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
-                    echo '<span aria-hidden="true">&times;</span>';
-                    echo '</button>';
-                    echo '</div>';
-                else:
-                    echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">';
-                    echo '<strong>Holy guacamole!</strong> Wrong Username/Password';
-                    echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
-                    echo '<span aria-hidden="true">&times;</span>';
-                    echo '</button>';
-                    echo '</div>';
-
-                    break;
-                endif;
-            }
-        
+            if ($userType === $arrUserType[$username] && $password === $arrPassword[$username]):
+                echo '<div class="alert alert-success alert-dismissible fade show" role="alert">';
+                echo '<strong>Welcome to System: </strong> ' . $username .'.';
+                echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
+                echo '<span aria-hidden="true">&times;</span>';
+                echo '</button>';
+                echo '</div>';
+            else:
+                echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">';
+                echo '<strong>Invalid</strong> Username/Password';
+                echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
+                echo '<span aria-hidden="true">&times;</span>';
+                echo '</button>';
+                echo '</div>';
+            endif;
         }
 
     ?>
