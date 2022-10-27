@@ -5,10 +5,7 @@
     $arrSize = array("Regular" => 0, "Up-Size" => 5, "Jumbo" => 10);
 ?>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vendor Machine</title>
+    <title>Vendo Machine</title>
 </head>
 <body>
     <h3>Vendo Machine</h3>
@@ -32,7 +29,7 @@
             </select>
 
             <label for="txtQTY">Quantity</label>
-            <input type="number" name="txtQTY" id="txtQTY" value="1">
+            <input type="number" name="txtQTY" id="txtQTY" min="1" value="1">
             <input type="submit" name="btnSend" id="btnSend" value="Check Out">
         </fieldset>
     </form>
@@ -49,23 +46,34 @@
             $arrUserChoice = $_POST['chkDrinks'];
             $size = $_POST['drpSize'];
             $quantity = $_POST['txtQTY'] ;
+            $addedSizeCompute = 0;
+            $totalAmount;
 
-            foreach($arrUserChoice as $key => $value){
-                if($quantity > 1):
-                    echo '<li>'. $quantity . ' pieces of '. $size . ' ' .$value . ' amouting to ₱' . ($arrDrinks[$value] + $arrSize[$size]). '</li>';
-                else:
-                    echo '<li>'. $quantity . ' piece of '. $size . ' '. $value .' amouting to ₱'. ($arrDrinks[$value] + $arrSize[$size]). '</li>';
-                endif;
 
-                $itemCount++;
-            }
+                foreach($arrUserChoice as $key => $value){
+                    $addedSizeCompute = $arrDrinks[$value] + $arrSize[$size]; // compute when user chosen the size of drinks
+
+                    if($quantity > 1):
+                        echo '<li>'. $quantity . ' pieces of '. $size . ' ' .$value . ' amouting to ₱' . $addedSizeCompute . '</li>';
+                    else:
+                        echo '<li>'. $quantity . ' piece of '. $size . ' '. $value .' amouting to ₱'. $addedSizeCompute . '</li>';
+                    endif;
+
+                    $itemCount++; // Count an item
+                    
+                    $totalAmount +=  ($addedSizeCompute * $quantity); // Process the computation amount all per item   
+                }
+            $qtyPerItem = $quantity * $itemCount; // the quatity per item
             ?>  
         </ul>
-        
-        <b>Total Number of Items: </b> <?php echo $quantity * $itemCount; ?> <br>
-        <b>Total Amount: </b>
+
+        <b>Total Number of Items: </b> <?php echo $qtyPerItem; ?> <br>
+        <b>Total Amount: </b> <?php echo $totalAmount ?>
             
-    <?php } ?>
+    <?php }
+            
+    
+    ?>
 
 
 </html>
