@@ -97,7 +97,10 @@
                                 <div class="form-group">
                                     <label for="drpPosistion" class="text-info">Job Type:</label><br>
                                     <select class="form-control" name="drpPosistion" id="drpPosistion">
-                                        <option value="" selected>Select Job Type</option>
+                                        <?php
+                                            $arrJobType = array("Developer", "Designer", "Quality Assurance");
+                                        .....................
+                                        ?>
                                         <option value="Developer">Developer</option>
                                         <option value="Designer">Designer</option>
                                         <option value="Quality Assurance">Quality Assurance</option>
