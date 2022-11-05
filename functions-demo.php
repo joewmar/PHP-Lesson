@@ -50,6 +50,12 @@
         test();
         $testNum = 10;
         echo $greet;
+
+        /*how to call function via other files
+            > require(filename.php);
+            > require_once(filename.php);
+            > include(filename.php);
+        */
     ?>
     
 </body>

@@ -10,7 +10,7 @@
             $fileExtTemp = explode('.', $fileName); // thi become the array
             $fileExt = strtolower(end($fileExtTemp)); 
 
-            $arrAllowFiles = array('jpeg', 'jpg'. 'png');
+            $arrAllowFiles = array('jpeg', 'jpg', 'png');
 
             $uploadDIR = 'uploads/';
 
