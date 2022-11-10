@@ -1,11 +1,5 @@
 <?php
-    $arrProducts = array(
-        array(),
-        array(),
-        array(),
-        array(),
-
-    );
+    include_once("tempdatabase.php");
 ?>
 
 <!DOCTYPE html>
@@ -35,74 +29,28 @@
         <hr>
         <div class="row">
             <!-- Product 1 -->
-            <div class="col-md-3 col-sm-6">
-                <div class="product-grid2 card">
-                    <div class="product-image2">
-                        <a href="#">
-                            <img class="pic-1" src="https://www.w3schools.com/bootstrap4/img_avatar4.png">
-                            <img class="pic-2" src="https://www.w3schools.com/bootstrap4/img_avatar3.png">
-                        </a>
-                        <a class="add-to-cart" href="">Add to cart</a>
+            <?php
+                foreach($arrProducts as $key => $valueItem):
+            ?>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="product-grid2 card mb-5">
+                            <div class="product-image2">
+                                <a href="./detail.php?pd=<?php echo $key;?>">
+                                    <img class="pic-1" src="./img/<?php echo $arrProducts[$key]['photo1'];?>">
+                                    <img class="pic-2" src="./img/<?php echo $arrProducts[$key]['photo2'];?>">
+                                </a>
+                                <a class="add-to-cart" href="./detail.php?pid=<?php echo $key;?>">Add to cart</a>
+                            </div>
+                            <div class="product-content">
+                                <h3 class="title d-inline"><?php echo $arrProducts[$key]['name'];?>
+                                    <span class="badge badge-dark">₱<?php echo $arrProducts[$key]['price'];?></span>
+                                </h3>
+                            </div>
+                        </div>
                     </div>
-                    <div class="product-content">
-                        <h3 class="title d-inline">Women's Designer Top
-                            <span class="badge badge-dark">$599.99</span>
-                        </h3>
-                    </div>
-                </div>
-            </div>
-            <!-- Product 2 -->
-            <div class="col-md-3 col-sm-6">
-                <div class="product-grid2 card">
-                  <div class="product-image2">
-                      <a href="#">
-                          <img class="pic-1" src="https://www.w3schools.com/bootstrap4/img_avatar4.png">
-                          <img class="pic-2" src="https://www.w3schools.com/bootstrap4/img_avatar3.png">
-                      </a>
-                      <a class="add-to-cart" href="">Add to cart</a>
-                    </div>
-                    <div class="product-content">
-                        <h3 class="title d-inline">Women's Yellow Top</h3>
-                            <span class="badge badge-dark">$699.99</span>
-                        </h3>
-                    </div>
-                </div>
-            </div>
-            <!-- Product 3 -->
-            <div class="col-md-3 col-sm-6 col-12">
-                <div class="product-grid2 card">
-                    <div class="product-image2">
-                        <a href="#">
-                            <img class="pic-1" src="https://www.w3schools.com/bootstrap4/img_avatar4.png">
-                            <img class="pic-2" src="https://www.w3schools.com/bootstrap4/img_avatar3.png">
-                        </a>
-                        <a class="add-to-cart" href="">Add to cart</a>
-                    </div>
-                    <div class="product-content">
-                        <h3 class="title d-inline">Women's Designer Top
-                            <span class="badge badge-dark">$599.99</span>
-                        </h3>
-                    </div>
-                </div>
-            </div>
-            <!-- Product 4 -->
-            <div class="col-md-3 col-sm-6">
-                <div class="product-grid2 card">
-                    <div class="product-image2">
-                        <a href="#">
-                            <img class="pic-1" src="https://www.w3schools.com/bootstrap4/img_avatar4.png">
-                            <img class="pic-2" src="https://www.w3schools.com/bootstrap4/img_avatar3.png">
-                        </a>
-                        <a class="add-to-cart" href="">Add to cart</a>
-                    </div>
-                    <div class="product-content">
-                        <h3 class="title d-inline">Hello
-                            <span class="badge badge-dark">$599.99</span>
-                        </h3>
-                    </div>
-                </div>
-            </div>
-        </div>
+            <?php            
+                endforeach;
+            ?>
     </div>
 
    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

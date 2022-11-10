@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/bootstrap.css">
     <link rel="stylesheet" href="./css/custom-login.css">
 </head>
 
@@ -14,34 +14,35 @@
 
 ?>
 <body>
-    <?php
-        $userType = $_POST['drpPosistion'];
-        $username = $_POST['txtUsername'];
-        $password = $_POST['txtPassword'];
-        if(isset($_POST['btnSubmit'])){
-            if ($userType === $arrUserType[$username] && $password === $arrPassword[$username]):
-                echo '<div class="alert alert-success alert-dismissible fade show" role="alert">';
-                echo '<strong>Welcome to System: </strong> ' . $username .'.';
-                echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
-                echo '<span aria-hidden="true">&times;</span>';
-                echo '</button>';
-                echo '</div>';
-            else:
-                echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">';
-                echo '<strong>Invalid</strong> Username/Password';
-                echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
-                echo '<span aria-hidden="true">&times;</span>';
-                echo '</button>';
-                echo '</div>';
-            endif;
-        }
 
-    ?>
     
     <div id="login">
             <div class="container">
                 <div id="login-row" class="row justify-content-center align-items-center">
                     <div id="login-column" class="col-md-6">
+                    <?php
+                                if(isset($_POST['btnSubmit'])){
+                                    $userType = $_POST['drpPosistion'];
+                                    $username = $_POST['txtUsername'];
+                                    $password = $_POST['txtPassword'];
+                                    if ($userType === $arrUserType[$username] && $password === $arrPassword[$username]):
+                                        echo '<div class="alert alert-success alert-dismissible fade show" role="alert">';
+                                        echo '<strong>Welcome to System: </strong> ' . $username .'.';
+                                        echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
+                                        echo '<span aria-hidden="true">&times;</span>';
+                                        echo '</button>';
+                                        echo '</div>';
+                                    else:
+                                        echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">';
+                                        echo '<strong>Invalid</strong> Username/Password';
+                                        echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
+                                        echo '<span aria-hidden="true">&times;</span>';
+                                        echo '</button>';
+                                        echo '</div>';
+                                    endif;
+                                }
+                            
+                        ?>
                         <div id="login-box" class="col-md-12 h-100">
                             <form id="login-form" class="form" action="" method="post">
                                 <h3 class="text-center text-info">Login</h3>
@@ -71,7 +72,7 @@
         </div>
     </div>
     
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+    <script src="./js/jquery.js"></script>
+    <script src="./js/bootstrap.js"></script>
 </body>
 </html>

@@ -1,3 +1,9 @@
+<?php
+    include_once("tempdatabase.php");
+    if(!isset($_GET['pd']))
+        header("Location: index.php");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,18 +33,16 @@
             <div class="col-md-5 col-sm-7 col-12">
                 <div class="product-grid2 card">
                     <div class="product-image2">
-                        <a href="#">
-                            <img class="pic-1" src="https://www.w3schools.com/bootstrap4/img_avatar4.png">
-                            <img class="pic-2" src="https://www.w3schools.com/bootstrap4/img_avatar3.png">
-                        </a>
+                        <img class="pic-1" src="./img/<?php echo $arrProducts[$_GET['pd']]['photo1'];?>">
+                        <img class="pic-2" src="./img/<?php echo $arrProducts[$_GET['pd']]['photo2'];?>">
                     </div>
                 </div>
             </div>
             <div class="col-md-7 col-sm-5 col-12">
-                <h4 class="h4 d-inline py-5">Barong
-                    <span class="badge badge-dark">P599.99</span>
+                <h4 class="h4 d-inline py-5"><?php echo $arrProducts[$_GET['pd']]['name'];?>
+                    <span class="badge badge-dark">₱<?php echo $arrProducts[$_GET['pd']]['price'];?></span>
                 </h4>
-                <p class="my-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi delectus autem impedit recusandae iure laudantium nisi voluptatem id cupiditate voluptates labore fugit, minima quasi eligendi quaerat! Ea animi harum non molestias veniam cum est rerum, deleniti eum ullam. Maxime hic nisi debitis consequatur eaque, quaerat dolorum quis labore quia. Doloribus?</p>
+                <p class="my-3"><?php echo $arrProducts[$_GET['pd']]['description'];?></p>
                 <hr>
                 <h5>Select Size</h5>
                 <div class="form-check form-check-inline">
