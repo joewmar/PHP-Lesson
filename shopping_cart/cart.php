@@ -1,3 +1,8 @@
+<?php
+    session_start();
+    include("tempdatabase.php");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,87 +30,104 @@
         <div class="row mt-3">
             <div class="col-12">
                 <div class="table-responsive">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th scope="col"> </th>
-                                <th scope="col">Product</th>
-                                <th scope="col">Size</th>
-                                <th scope="col" class="text-center">Quantity</th>
-                                <th scope="col" class="text-right">Price</th>
-                                <th scope="col" class="text-right">Total</th>
-                                <th> </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>
-                                <td>Product Name Dada</td>
-                                <td>In stock</td>
-                                <td><input class="form-control text-center" type="number" min="1" max="100" value="1" /></td>
-                                <td class="text-right">124,90 €</td>
-                                <td class="text-right">300,90 €</td>
-                                <td class="text-right"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button> </td>
-                            </tr>
-                            <tr>
-                                <td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>
-                                <td>Product Name Toto</td>
-                                <td>In stock</td>
-                                <td><input class="form-control text-center" type="number" min="1" max="100" value="1" /></td>
-                                <td class="text-right">33,90 €</td>
-                                <td class="text-right">300,90 €</td>
-                                <td class="text-right"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button> </td>
-                            </tr>
-                            <tr>
-                                <td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>
-                                <td>Product Name Titi</td>
-                                <td>In stock</td>
-                                <td><input class="form-control text-center" type="number" min="1" max="100" value="1" /></td>
-                                <td class="text-right">70,00 €</td>
-                                <td class="text-right">300,90 €</td>
+                    <?php if(isset($_SESSION['productId'])): ?>
 
-                                <td class="text-right"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button> </td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td><strong>Total</strong></td>
-                                <td class="text-center">2</td>
-                                <td class="text-right">----</td>
-                                <td class="text-right"><strong>2400.00</strong></td>
-                                <td class="text-center">----</td>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col"> </th>
+                                    <th scope="col">Product</th>
+                                    <th scope="col">Size</th>
+                                    <th scope="col" class="text-center">Quantity</th>
+                                    <th scope="col" class="text-right">Price</th>
+                                    <th scope="col" class="text-right">Total</th>
+                                    <th> </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><img class="w-25"src="./img/<?php echo $arrProducts[$_SESSION['productId']]['photo1']?>" /> </td>
+                                    <td><?php echo $arrProducts[$_SESSION['productId']]['name']?></td>
+                                    <td><?php echo $_SESSION['size']?></td>
+                                    <td><input class="form-control text-center" type="number" min="1" max="100" value="<?php echo $_SESSION['quantity'];?>" /></td>
+                                    <td class="text-right"><?php echo $arrProducts[$_SESSION['productId']]['price'];?></td>
+                                    <td class="text-right"><?php echo ($arrProducts[$_SESSION['productId']]['price'] * $_SESSION['quantity']);?></td>
+                                    <td class="text-right"><a class="btn btn-sm btn-danger" href="remove-confirm.php"><i class="fa fa-trash"></i> </a> </td>
+                                </tr>
 
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <!-- Footer button -->
-            <div class="col mb-2">
-                <div class="row">
-                    <div class="col-sm-12  col-md-4">
-                        <button class="btn btn-block btn-danger">
-                            <i class="fa-solid fa-bag-shopping"></i>
-                            Continue Shopping
-                        </button>
-                    </div>
-                    <div class="col-sm-12 col-md-4 text-center">
-                        <button class="btn btn-block btn-success">
-                            <i class="fa-solid fa-pen-to-square"></i>                          
-                            Update Cart
-                        </button>
-                    </div>
-                    <div class="col-sm-12 col-md-4 text-right">
-                        <button class="btn btn-lg btn-block btn-info">
-                            <i class="fa-solid fa-right-to-bracket"></i>
-                            Checkout
-                        </button>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td><strong>Total</strong></td>
+                                    <td class="text-center"><?php echo $_SESSION['quantity'];?></td>
+                                    <td class="text-right">----</td>
+                                    <td class="text-right"><strong>2400.00</strong></td>
+                                    <td class="text-center">----</td>
+
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-            </div>
+                <!-- Footer button -->
+                <div class="col mb-2">
+                    <div class="row">
+                        <div class="col-sm-12  col-md-4">
+                            <button class="btn btn-block btn-danger">
+                                <i class="fa-solid fa-bag-shopping"></i>
+                                Continue Shopping
+                            </button>
+                        </div>
+                        <div class="col-sm-12 col-md-4 text-center">
+                            <button class="btn btn-block btn-success">
+                                <i class="fa-solid fa-pen-to-square"></i>                          
+                                Update Cart
+                            </button>
+                        </div>
+                        <div class="col-sm-12 col-md-4 text-right">
+                            <button class="btn btn-lg btn-block btn-info">
+                                <i class="fa-solid fa-right-to-bracket"></i>
+                                Checkout
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            <?php else: ?> 
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="text-center">Product</th>
+                            <th scope="col" class="text-center">Size</th>
+                            <th scope="col" class="text-center">Quantity</th>
+                            <th scope="col" class="text-right">Price</th>
+                            <th scope="col" class="text-right">Total</th>
+                            <th> </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Cart is Empty</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="col-sm-12  col-md-4">
+                    <button class="btn btn-block btn-danger">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                        Continue Shopping
+                    </button>
+                </div>
+
+
+            <?php endif; ?>  
+            
         </div>
     </div>
-
+                                
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
 

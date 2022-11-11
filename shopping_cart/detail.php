@@ -1,7 +1,17 @@
 <?php
+    session_start();
     include_once("tempdatabase.php");
-    if(!isset($_GET['pd']))
+    if(!isset($_GET['pd'])) header("Location: index.php");
+    
+    if(isset($_POST['btnConfirm'])){
+        $_SESSION['productId'] = $_GET['pd'];
+        $_SESSION['size'] = $_POST['radSize'];
+        $_SESSION['quantity'] = $_POST['inputQTY'];
+        header("Location: confirm.php");
+    }
+    else if(isset($_POST['btnCancel'])){
         header("Location: index.php");
+    }
 ?>
 
 <!DOCTYPE html>
@@ -44,24 +54,27 @@
                 </h4>
                 <p class="my-3"><?php echo $arrProducts[$_GET['pd']]['description'];?></p>
                 <hr>
-                <h5>Select Size</h5>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="radSize" id="radXS" value="XS"><label class="form-check-label pr-4" for="radXS">XS</label>
-                    <input class="form-check-input" type="radio" name="radSize" id="radSM" value="SM"><label class="form-check-label pr-4" for="radSM">SM</label>
-                    <input class="form-check-input" type="radio" name="radSize" id="radMD" value="MD"><label class="form-check-label pr-4" for="radMD">MD</label>
-                    <input class="form-check-input" type="radio" name="radSize" id="radLG" value="LG"><label class="form-check-label pr-4" for="radLG">LG</label>
-                    <input class="form-check-input" type="radio" name="radSize" id="radXL" value="XL"><label class="form-check-label pr-4" for="radXL">XL</label>
-                </div>
-                <hr>
-                <h5>Enter Quantity:</h5>
-                <input class="form-control" type="number" placeholder="" min="1" max="100" value="1">
-                <div class="my-3">
-                    <button class="btn btn-dark">
-                        <i class="fa-solid fa-circle-check"></i>
-                        Confirm Product Purchase
-                    </button>
-                    <button class="btn btn-danger">Cancel/Go Back</button>
-                </div>
+                <form action="" method="post" class="form-group">
+                    <h5>Select Size</h5>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="radSize" id="radXS" value="XS" checked><label class="form-check-label pr-4" for="radXS">XS</label>
+                        <input class="form-check-input" type="radio" name="radSize" id="radSM" value="SM"><label class="form-check-label pr-4" for="radSM">SM</label>
+                        <input class="form-check-input" type="radio" name="radSize" id="radMD" value="MD"><label class="form-check-label pr-4" for="radMD">MD</label>
+                        <input class="form-check-input" type="radio" name="radSize" id="radLG" value="LG"><label class="form-check-label pr-4" for="radLG">LG</label>
+                        <input class="form-check-input" type="radio" name="radSize" id="radXL" value="XL"><label class="form-check-label pr-4" for="radXL">XL</label>
+                    </div>
+                    <hr>
+                    <h5>Enter Quantity:</h5>
+                    <input class="form-control" name="inputQTY" type="number" placeholder="" min="1" max="100" value="1">
+                    <div class="my-3">
+                        <button name="btnConfirm"class="btn btn-dark">
+                            <i class="fa-solid fa-circle-check"></i>
+                            Confirm Product Purchase
+                        </button>
+                        <button name="btnCancel" class="btn btn-danger">Cancel/Go Back</button>
+                    </div>
+                </form>
+
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
