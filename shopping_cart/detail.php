@@ -1,12 +1,13 @@
 <?php
     session_start();
     include_once("tempdatabase.php");
-    if(!isset($_GET['pd'])) header("Location: index.php");
+    if(!isset($_GET['pid'])) header("Location: index.php");
     
     if(isset($_POST['btnConfirm'])){
-        $_SESSION['productId'] = $_GET['pd'];
-        $_SESSION['size'] = $_POST['radSize'];
-        $_SESSION['quantity'] = $_POST['inputQTY'];
+        $_SESSION[ $_SESSION['cartCount']]['id'] = $_GET['pid'];
+        $_SESSION[ $_SESSION['cartCount']]['size']= $_POST['radSize'];
+        $_SESSION[ $_SESSION['cartCount']]['quantity'] = $_POST['inputQTY'];
+        $_SESSION['cartCount'] += 1;
         header("Location: confirm.php");
     }
     else if(isset($_POST['btnCancel'])){
@@ -31,11 +32,11 @@
         <div class="mt-5">
             <h3 class="h3 d-inline mt-5">Pambansang Damit </h3>
             <div class="d-inline float-right ">
-                <button type="button" name="btnCart" class="btn btn-primary btn-sm mt-1">
+                <a href="cart.php" name="btnCart" class="btn btn-primary btn-sm mt-1">
                     <i class="fa-solid fa-cart-shopping"></i>
-                    Cart <span class="badge badge-light">0</span>
+                    Cart <span class="badge badge-light"><?php echo (isset($_SESSION['cartCount']) ? $_SESSION['cartCount']: '0');?></span>
                     <span class="sr-only">unread messages</span>
-                </button>
+                </a>
             </div>
         </div>
         <hr>
@@ -43,16 +44,16 @@
             <div class="col-md-5 col-sm-7 col-12">
                 <div class="product-grid2 card">
                     <div class="product-image2">
-                        <img class="pic-1" src="./img/<?php echo $arrProducts[$_GET['pd']]['photo1'];?>">
-                        <img class="pic-2" src="./img/<?php echo $arrProducts[$_GET['pd']]['photo2'];?>">
+                        <img class="pic-1" src="./img/<?php echo $arrProducts[$_GET['pid']]['photo1'];?>">
+                        <img class="pic-2" src="./img/<?php echo $arrProducts[$_GET['pid']]['photo2'];?>">
                     </div>
                 </div>
             </div>
             <div class="col-md-7 col-sm-5 col-12">
-                <h4 class="h4 d-inline py-5"><?php echo $arrProducts[$_GET['pd']]['name'];?>
-                    <span class="badge badge-dark">₱<?php echo $arrProducts[$_GET['pd']]['price'];?></span>
+                <h4 class="h4 d-inline py-5"><?php echo $arrProducts[$_GET['pid']]['name'];?>
+                    <span class="badge badge-dark">₱<?php echo $arrProducts[$_GET['pid']]['price'];?></span>
                 </h4>
-                <p class="my-3"><?php echo $arrProducts[$_GET['pd']]['description'];?></p>
+                <p class="my-3"><?php echo $arrProducts[$_GET['pid']]['description'];?></p>
                 <hr>
                 <form action="" method="post" class="form-group">
                     <h5>Select Size</h5>

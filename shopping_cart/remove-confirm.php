@@ -1,3 +1,7 @@
+<?php
+    session_start();
+    include_once("tempdatabase.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,11 +19,11 @@
         <div class="mt-5">
             <h3 class="h3 d-inline mt-5">Pambansang Damit </h3>
             <div class="d-inline float-right ">
-                <button type="button" name="btnCart" class="btn btn-primary btn-sm mt-1">
-                    <i class="fa-solid fa-cart-shopping"></i>
-                    Cart <span class="badge badge-light">0</span>
-                    <span class="sr-only">unread messages</span>
-                </button>
+            <a href="cart.php" name="btnCart" class="btn btn-primary btn-sm mt-1">
+                <i class="fa-solid fa-cart-shopping"></i>
+                Cart <span class="badge badge-light"><?php echo (isset($_SESSION['cartCount']) ? $_SESSION['cartCount']: '0');?></span>
+                <span class="sr-only">unread messages</span>
+            </a>
             </div>
         </div>
         <hr>

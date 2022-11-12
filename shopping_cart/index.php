@@ -1,4 +1,5 @@
 <?php
+    session_start();
     include_once("tempdatabase.php");
 ?>
 
@@ -21,7 +22,7 @@
             <div class="d-inline float-right ">
                 <a href="./cart.php" name="btnCart" class="btn btn-primary btn-sm mt-1">
                     <i class="fa-solid fa-cart-shopping"></i>
-                    Cart <span class="badge badge-light">0</span>
+                    Cart <span class="badge badge-light"><?php echo (isset($_SESSION['cartCount']) ? $_SESSION['cartCount']: '0');?></span>
                     <span class="sr-only">unread messages</span>
                 </a>
             </div>
@@ -35,11 +36,10 @@
                     <div class="col-md-3 col-sm-6">
                         <div class="product-grid2 card mb-5">
                             <div class="product-image2">
-                                <a href="./detail.php?pd=<?php echo $key;?>">
+                                <a href="./detail.php?pid=<?php echo $key;?>">
                                     <img class="pic-1" src="./img/<?php echo $arrProducts[$key]['photo1'];?>">
                                     <img class="pic-2" src="./img/<?php echo $arrProducts[$key]['photo2'];?>">
                                 </a>
-                                <a class="add-to-cart" href="./detail.php?pid=<?php echo $key;?>">Add to cart</a>
                             </div>
                             <div class="product-content">
                                 <h3 class="title d-inline"><?php echo $arrProducts[$key]['name'];?>

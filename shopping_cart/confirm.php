@@ -1,6 +1,7 @@
 <?php
-
+    session_start();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,22 +21,23 @@
             <div class="d-inline float-right ">
                 <button type="button" name="btnCart" class="btn btn-primary btn-sm mt-1">
                     <i class="fa-solid fa-cart-shopping"></i>
-                    Cart <span class="badge badge-light">0</span>
+                    Cart <span class="badge badge-light"><?php echo (isset($_SESSION['cartCount']) ? $_SESSION['cartCount']: '0');?></span>
                     <span class="sr-only">unread messages</span>
                 </button>
             </div>
         </div>
         <hr>
         <h5>Product Successfully Added to the Cart, what do you want do next?</h5>
+        <?php print_r($_SESSION['cartCount']);?>
         <div class="my-3">
-            <button class="btn btn-dark">
+            <a href="cart.php" class="btn btn-dark">
                 <i class="fa-solid fa-cart-shopping"></i>
                 View Cart
-            </button>
-            <button class="btn btn-danger">
+            </a>
+            <a href="index.php" class="btn btn-danger">
                 <i class="fa-solid fa-bag-shopping"></i>
                 Continue Shopping
-            </button>
+            </a>
         </div>    
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
