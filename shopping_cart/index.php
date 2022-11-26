@@ -36,9 +36,9 @@
                     <div class="col-md-3 col-sm-6">
                         <div class="product-grid2 card mb-5">
                             <div class="product-image2">
-                                <a href="./detail.php?pid=<?php echo $key;?>">
+                                <a name="btnDetails" href="./detail.php?pid=<?php echo $key;?>">
                                     <img class="pic-1" src="./img/<?php echo $arrProducts[$key]['photo1'];?>">
-                                    <img class="pic-2" src="./img/<?php echo $arrProducts[$key]['photo2'];?>">
+                                    <img class="pic-2 h-100" src="./img/<?php echo $arrProducts[$key]['photo2'];?>">
                                 </a>
                             </div>
                             <div class="product-content">

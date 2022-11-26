@@ -1,5 +1,7 @@
 <?php
     session_start();
+    if(!isset($_SESSION['cartCount']) )header("Location: index.php");
+
 ?>
 
 <!DOCTYPE html>
@@ -19,16 +21,16 @@
         <div class="mt-5">
             <h3 class="h3 d-inline mt-5">Pambansang Damit </h3>
             <div class="d-inline float-right ">
-                <button type="button" name="btnCart" class="btn btn-primary btn-sm mt-1">
+                <a href="cart.php" class="btn btn-primary btn-sm mt-1">
                     <i class="fa-solid fa-cart-shopping"></i>
                     Cart <span class="badge badge-light"><?php echo (isset($_SESSION['cartCount']) ? $_SESSION['cartCount']: '0');?></span>
                     <span class="sr-only">unread messages</span>
-                </button>
+                </a>
             </div>
         </div>
         <hr>
         <h5>Product Successfully Added to the Cart, what do you want do next?</h5>
-        <?php print_r($_SESSION['cartCount']);?>
+        <?php print_r($_SESSION['cartItems']);?>
         <div class="my-3">
             <a href="cart.php" class="btn btn-dark">
                 <i class="fa-solid fa-cart-shopping"></i>

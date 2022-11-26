@@ -4,10 +4,25 @@
     if(!isset($_GET['pid'])) header("Location: index.php");
     
     if(isset($_POST['btnConfirm'])){
-        $_SESSION[ $_SESSION['cartCount']]['id'] = $_GET['pid'];
-        $_SESSION[ $_SESSION['cartCount']]['size']= $_POST['radSize'];
-        $_SESSION[ $_SESSION['cartCount']]['quantity'] = $_POST['inputQTY'];
         $_SESSION['cartCount'] += 1;
+        $productID = $_GET['pid'];
+        $size = $_POST['radSize'];
+        $quantity = $_POST['inputQTY'];
+        $arrAddCart = array(
+            $productID => array(
+                'size' => $size,
+                'quantity' => $quantity,
+            )
+        );
+
+        $arrPrevCart = $_SESSION['cartItem'];
+        if(iseet($_SESSION['cartItem'])) {
+            $_SESSION['cartItems'] = array_merge($arrAddCart, $arrPrevCart);
+        }
+        else {
+            $_SESSION['cartItems'] = array_merge($arrAddCart);
+        }
+
         header("Location: confirm.php");
     }
     else if(isset($_POST['btnCancel'])){

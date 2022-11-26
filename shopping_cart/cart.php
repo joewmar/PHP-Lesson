@@ -55,7 +55,7 @@
                                     <td class="text-right"><?php echo ($arrProducts[$_SESSION[$CartKey]['id']]['price'] * $_SESSION[$CartKey]['quantity']);?></td>
                                     <td class="text-right"><a class="btn btn-sm btn-danger" href="remove-confirm.php"><i class="fa fa-trash"></i> </a> </td>
                                 </tr>
-                                <?php foreach($_SESSION['cartCount'] as $CartKey => $CartValue):?>
+                                <?php foreach($_SESSION['cartItems'] as $CartKey => $CartValue):?>
                                 <tr>
                                     <td>asdfsadfad</td>
                                     <td></td>
