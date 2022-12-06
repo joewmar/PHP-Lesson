@@ -51,6 +51,6 @@
         echo 'Error: Could not prepare query:' . $strSQL ;
     }
     
-    mysqli_stmt_close();
+    mysqli_stmt_close($stmt);
     require('close_connection.php');
 ?>

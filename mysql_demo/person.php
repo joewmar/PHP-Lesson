@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Persons</title>
 </head>
 <body>
     <h2>Person List</h2>
@@ -16,13 +16,14 @@
                 <th>Sex</th>
                 <th>Email Address</th>
                 <th>Update</th>
+                <th>Remove</th>
 
             </tr>
         </thead>
         <tbody>
         <?php 
             require("open_connection.php");
-            $strSQL = "SELECT * FROM person WHERE Sex = 'Male' ORDER BY LastName";
+            $strSQL = "SELECT * FROM persons";
             if($rsPersons = mysqli_query($con, $strSQL)){
                 if(mysqli_num_rows($rsPersons) > 0){
                     while($recPerson = mysqli_fetch_array($rsPersons)){
@@ -30,7 +31,8 @@
                             <td>' . $recPerson['FirstName'] . ' '. $recPerson['LastName']. '</td>
                             <td>' . $recPerson['Sex'] . '</td>
                             <td>' . $recPerson['Email'] . '</td> 
-                            <td align="center"><a href="update-person.php?k="'$recPerson['ID']'>EDIT</a></td> 
+                            <td align="center"><a href="update-person.php?k=' . $recPerson['Id'] . '">EDIT</a></td> 
+                            <td align="center"><a href="delete-person.php?k=' . $recPerson['Id'] . '">REMOVE</a></td> 
                         </tr>'; 
                     }
                     mysqli_free_result($rsPersons);

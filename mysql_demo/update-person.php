@@ -5,7 +5,7 @@
         $_SESSION['k'] = $_GET['k'];
     
         require("open_connection.php");
-        $strSQL = "SELECT * FROM person WHERE ID = ". $_SESSION['k'];
+        $strSQL = "SELECT * FROM persons WHERE Id = ". $_SESSION['k'];
         if($rsPersons = mysqli_query($con, $strSQL)){
             if(mysqli_num_rows($rsPersons) > 0){
                 $recPerson = mysqli_fetch_array($rsPersons);
@@ -48,20 +48,17 @@
             require('open_connection.php');
             // Inserting Multiple Rows
             $strSQL = "
-            
-                UPDATE person SET 
-                    LastName = , 
-                    FirstName = , 
-                    Sex = , 
-                    Email = )
-                ('$lastname', '$firstname', '$sex', '$email')
-        
-            ";
+                UPDATE persons SET 
+                    LastName =  '$lastname', 
+                    FirstName = '$firstname', 
+                    Sex = '$sex', 
+                    Email = '$email'
+                WHERE Id = " . $_SESSION['k'];
         
             if(mysqli_query($con, $strSQL))
-                header("location: clear-add-person.php");
+                header("location: person.php");
             else
-                $arrError[] = 'Error: Failed SQL';
+                $arrError[] = 'Error: Failed Update SQL';
         
             require('close_connection.php');
         }
@@ -81,6 +78,7 @@
 </head>
 <body>
     <h1>Edit Person</h1>
+        <!-- <h1><?php print_r($arrError);?></h1> -->
     <hr>
     <form action="" method="post">
         <input type="text" name="txtLastName" id="txtxLastName" value="<?php echo (isset($recPerson['LastName']) ? $recPerson['LastName']: '');?>" placeholder="Last Name" required><br>

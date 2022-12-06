@@ -16,7 +16,7 @@
         );
 
         $arrPrevCart = $_SESSION['cartItem'];
-        if(iseet($_SESSION['cartItem'])) {
+        if(isset($_SESSION['cartItem'])) {
             $_SESSION['cartItems'] = array_merge($arrAddCart, $arrPrevCart);
         }
         else {
