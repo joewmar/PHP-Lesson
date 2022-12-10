@@ -58,18 +58,17 @@
             <?php require_once("nav.php")?>
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2"><i class="fa fa-users"></i> Add Persons</h1>
+                    <h1 class="h2"><i class="fa fa-users"></i> Edit Persons</h1>
                 </div>
-                <?php print_r($recPersons);?>
                 <form method="post">
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="txtLastName">Last Name <span class="text-danger">*</span></label>
-                            <input type="text" name="txtLastName" class="form-control" id="txtLastName" required autofocus value="<?php echo $recPersons['LastName']?>">
+                            <input type="text" name="txtLastName" class="form-control" id="txtLastName" required autofocus value="<?php echo $recPersons[0]['LastName']?>">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="txtFirstName">FirstName <span class="text-danger">*</span></label>
-                            <input type="text" name="txtFirstName" class="form-control" id="txtFirstName" required value="<?php echo $recPersons['FirstName']?>">
+                            <input type="text" name="txtFirstName" class="form-control" id="txtFirstName" required value="<?php echo $recPersons[0]['FirstName']?>">
                         </div>
                     </div>
                     <div class="form-row">
@@ -77,9 +76,9 @@
                             <label for="drpSex">Sex <span class="text-danger">*</span></label>
                             <select class="form-control" name="drpSex" id="drpSex" required >
                                 <?php
-                                    if(isset($arrSex) && isset($recPerson['Sex'])){
+                                    if(isset($arrSex) && isset($recPerson[0]['Sex'])){
                                         foreach ($arrSex as $key => $value) {
-                                            if($value == $recPerson['Sex'])
+                                            if($value === $recPerson[0]['Sex'])
                                                 echo '<option value="' . $value . '" selected>' . $value . '</option>';
                                             else
                                                 echo '<option value="' . $value . '">' . $value . '</option>';
@@ -90,11 +89,11 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label for="txtEmail">Email Address <span class="text-danger">*</span></label>
-                            <input type="email" name="txtEmail" class="form-control" id="txtEmail" required value="<?php echo $recPersons['Email']?>">
+                            <input type="email" name="txtEmail" class="form-control" id="txtEmail" required value="<?php echo $recPersons[0]['Email']?>">
                         </div>
                     </div>
-                    <button type="submit" name="btnAdd" class="btn btn-primary"><i class="fa fa-plus"></i> Update</button>
-                    <a href="person.php" class="btn btn-primary"><i class="fa fa-plus"></i> Update</a>
+                    <button type="submit" name="btnAdd" class="btn btn-primary"><i class="fa fa-edit"></i> Update</button>
+                    <a href="persons.php" class="btn btn-danger"><i class="fa fa-xmark"></i> Cancel/Go Back</a>
                 </form>
                 <br><br>
             </main>

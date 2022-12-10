@@ -43,7 +43,6 @@
         
            
         }
-
         closeConnections($con);
     }
 
@@ -104,9 +103,11 @@
                                 $con = openConnection();
                                 $strSQL = "SELECT * FROM persons ORDER BY Sex, FirstName";
                                 $recPersons = getRecord($con, $strSQL);
-
                                 if(!empty($recPersons)){
+
                                     foreach ($recPersons as $key => $value) {
+                                        $strSQL = "SELECT * FROM persons WHERE Id = ".  $value['Id'];
+                                        $recPersonInfo = getRecord($con, $strSQL);
                                         echo '
                                         <tr>
                                             <td>' . $value['FirstName'] . ' ' . $value['LastName'] . '</td>
@@ -114,7 +115,31 @@
                                             <td>' .  $value['Email'] . '</td>
                                             <td>
                                                 <a href="update-person.php?k=' . $value['Id'] . '" class="btn btn-success"><i class=" fa fa-edit"></i> Edit</a> 
-                                                <a href="update-person.php?r=' . $value['Id']. '" class="btn btn-danger"><i class=" fa fa-trash"></i> Remove</a>
+                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter"><i class=" fa fa-trash"></i> Remove</button>
+                                                <!-- Modal -->
+                                                <form>
+                                                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="exampleModalLongTitle">Do you want remove this record?</h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                            <div class="modal-body">
+                                                                <p><b>Name: </b> ' .  $recPersonInfo[0]['FirstName'] . ' ' . $recPersonInfo[0]['LastName'] . ' </p>
+                                                                <p><b>Sex: </b>' . $recPersonInfo[0]['Sex'] .  '</p>
+                                                                <p><b>Email: </b> ' .$recPersonInfo[0]['Email'] . ' </p>
+                                                            </div>
+                                                                <div class="modal-footer">
+                                                                    <a href="delete-person.php?k=' . $recPersonInfo[0]['Id'] .'" class="btn btn-light" data-dismiss="modal">Yes</a>
+                                                                    <button type="button" class="btn btn-dark" data-dismiss="modal">No</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
                                             </td>
                                         </tr>
         
