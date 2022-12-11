@@ -18,43 +18,49 @@
         $arrAllowFiles = ['jpeg', 'jpg', 'png'];
         $uploadDIR = '../img/';
 
-        if(isset($_FILES['filePhoto1'])){
-            $arrErrorFile1 =  [];
+        if(isset($_FILES['filePhoto1']) && isset($_FILES['filePhoto2'])){
             $fileName1 = $_FILES['filePhoto1']['name'];
             $fileSize1 = $_FILES['filePhoto1']['size'];
             $fileTemp1 = $_FILES['filePhoto1']['tmp_name'];
             $fileType1 = $_FILES['filePhoto1']['type'];
 
-            $fileExtTemp1 = explode('.', $fileName1); // thi become the array
-            $fileExt1 = strtolower(end($fileExtTemp1)); 
-
-            if(in_array($fileExt1, $arrAllowFiles) == false){
-                $arrErrorFile1[] = "Photo 1: Extension File is not allowed, You can only choose a JPG or PNG file"; 
-            }
-            if(empty($arrErrorFile1)){
-                $photo1 = $fileName1;
-                move_uploaded_file($fileTemp1, $uploadDIR . $fileName1);
-            }
-
-        }
-        if(isset($_FILES['filePhoto2'])){
-            $arrErrorFile2 = [];
             $fileName2 = $_FILES['filePhoto2']['name'];
             $fileSize2 = $_FILES['filePhoto2']['size'];
             $fileTemp2 = $_FILES['filePhoto2']['tmp_name'];
             $fileType2 = $_FILES['filePhoto2']['type'];
 
+            $fileExtTemp1 = explode('.', $fileName1); // thi become the array
+            $fileExt1 = strtolower(end($fileExtTemp1)); 
+
             $fileExtTemp2 = explode('.', $fileName2); // this become the array
             $fileExt2 = strtolower(end($fileExtTemp2)); 
 
-            if(in_array($fileExt2, $arrAllowFiles) == false){
-                $arrErrorFile2[] = "Photo 2: Extension File is not allowed, You can only choose a JPG or PNG file"; 
-            }
-            if(empty($arrErrorFile2)){
-                $photo2 = $fileName2;
+            if(in_array($fileExt1, $arrAllowFiles) == false)
+                $arrError[] = "Photo 1: Extension File is not allowed, You can only choose a JPG or PNG file"; 
+
+            if(in_array($fileExt2, $arrAllowFiles) == false)
+                $arrError[] = "Photo 2: Extension File is not allowed, You can only choose a JPG or PNG file"; 
+
+            if($fileSize1 > 5000000)
+                $arrError[] = "Photo 1 should be 5MB Maximuim";
+                
+            if($fileSize2 > 5000000)
+                $arrError[] = "Photo 2 size should be 5MB Maximuim";
+
+            if(empty($arrError)){
+                $photo1 = sanitizeInputs($con, $fileName1);;
+                move_uploaded_file($fileTemp1, $uploadDIR . $fileName1);
+                $photo2 = sanitizeInputs($con, $fileName2);
                 move_uploaded_file($fileTemp2, $uploadDIR . $fileName2);
             }
+            else{
+                $arrError[] = "Something Wrong sending files";
+            }
         }
+        else{
+            $arrError[] = "2 Photos File are Required";
+        }
+
 
         if(empty($product_name))
             $arrError[] = "PRoduct Name is Required";
@@ -65,13 +71,6 @@
         if(empty($product_price))
             $arrError[] = "Product Price is Required";            
         
-        if(empty($photo1))
-            $arrError[] = "Photo 1 File is Required";
-
-        if(empty($photo2))
-            $arrError[] = "Photo 2 File is Required";
-    
-
         if(empty($arrError)){
             // Inserting Multiple Rows
             $strSQL = "
@@ -80,18 +79,14 @@
                 (name, description, price, photo1, photo2)
                 VALUES 
                 ('$product_name', '$product_description', $product_price, '$photo1', '$photo2')
-        
             ";
             if(mysqli_query($con, $strSQL))
                 header("location: product-added.php");
             else
                 $arrError[] = 'Error: Failed SQL';
         
-           
         }
-  
         closeConnections($con);
-
     }
     // print_r($arrError);
 ?>
@@ -131,6 +126,18 @@
                         ';
                         unset($_SESSION['successDelete']);
                     }
+                    if(isset($_SESSION['successUpdate'])){
+                        echo
+                        '
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            Record updated successfully
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        ';
+                        unset($_SESSION['successUpdate']);
+                    }
                 
                 ?>
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -169,11 +176,12 @@
                         <table class="table table-striped table-sm">
                             <thead>
                                 <tr>
+
+                                    <th></th>
+                                    <th></th>
                                     <th>Product Name</th>
                                     <th>Product Description</th>
                                     <th>Price</th>
-                                    <th>Photo 1</th>
-                                    <th>Photo 2</th>
                                     <th colspan="2">Options</th>
                                 </tr>
                             </thead>
@@ -191,14 +199,14 @@
                                         $recProductsInfo = getRecord($con, $strSQL);
                                         echo '
                                         <tr>
-                                            <td>' . $value['name'] . ' ' . '</td>
-                                            <td>' . $value['description']  . '</td>
-                                            <td>' .  $value['price'] . '</td>
-                                            <td><img style="width: 2em" src="../img/' . $value['photo1'] . '"/></td>
-                                            <td><img style="width: 2em" src="../img/' . $value['photo2'] . '"/></td>
-                                            <td>
-                                                <a href="update-product.php?k=' . $value['id'] . '" class="btn btn-success"><i class=" fa fa-edit"></i> Edit</a> 
-                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter"><i class=" fa fa-trash"></i> Remove</button>
+                                            <td><img style="width: 2em" src="../img/' . $value['photo1'] . ' ' . '"></td>
+                                            <td><img style="width: 2em" src="../img/' . $value['photo2']  . '"></td>
+                                            <td>' .  $value['name'] . '</td>
+                                            <td>' . $value['description'] . '</td>
+                                            <td>' . $value['price'] . '</td>
+                                            <td colspan="2">
+                                                <a href="update-product.php?k=' . $value['id'] . '" class="btn btn-sm btn-success"><i class=" fa fa-edit"></i> Edit</a> 
+                                                <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#exampleModalCenter"><i class=" fa fa-trash"></i> Remove</button>
                                                 <!-- Modal -->
                                                 <form>
                                                     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -238,8 +246,6 @@
                                         <td colspan="7" class="text-center">No record found</td>
                                     </tr>
 
-                                    
-                                    
                                     ';
 
                                 }

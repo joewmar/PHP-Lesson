@@ -1,5 +1,13 @@
 <?php
     session_start();
+    if(isset($_SESSION['username'])){
+        if ($_SESSION['username'] == "admin"){
+            header("Location: admin-panel/");
+        }
+        else{
+            header("Location: guest-panel/");
+        }
+    }
     require("functions.php");
     if(isset($_POST['btnLogin'])){
         $con = openConnection();
@@ -36,7 +44,7 @@
             else{
                echo 
                '
-                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <strong>Error!</strong> Wrong Username/Password.
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -47,10 +55,10 @@
                ';
             }
         }
-        else
+        else{
             echo 'ERROR: Could not execute your request';
-        
-            closeConnections($con);
+        }
+        closeConnections($con);
     }
 
 ?>
@@ -63,25 +71,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/custom-login.css">
+    <title>Pambasang Damit</title>
 </head>
-<body>
+<body class="bg-dark">
 <div id="login">
         <div class="container">
             <div id="login-row" class="row justify-content-center align-items-center">
                 <div id="login-column" class="col-md-6">
                     <div id="login-box" class="col-md-12">
                         <form id="login-form" class="form" action="" method="post">
-                            <h3 class="text-center text-info">Login</h3>
+                            <h3 class="text-center text-dark">Pambansang Damit INC. </h3>
                             <div class="form-group">
-                                <label for="txtUsername" class="text-info">Username:</label><br>
+                                <label for="txtUsername" class="text-dark">Username:</label><br>
                                 <input type="text" name="txtUsername" id="txtUsername" class="form-control" required autofocus>
                             </div>
                             <div class="form-group">
-                                <label for="txtPassword" class="text-info">Password:</label><br>
+                                <label for="txtPassword" class="text-dark">Password:</label><br>
                                 <input type="password" name="txtPassword" id="txtPassword" class="form-control" required>
                             </div>
                             <div class="form-group">
-                                <button type="submit" class="btn btn-info btn-md form-control" name="btnLogin">Sign in</button>
+                                <button type="submit" class="btn btn-dark btn-md form-control" name="btnLogin">Sign in</button>
                             </div>
                         </form>
                     </div>
