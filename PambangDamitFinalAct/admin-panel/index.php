@@ -16,7 +16,7 @@
                 <div class="card">
                 <h5 class="card-header">Total Products Sold: </h5>
                     <div class="card-body">
-                        <h5 class="card-title"><?php echo isset($_SESSION['totalsold'])? number_format($_SESSION['totalsold']): '0' ?></h5>
+                        <h5 class="card-title">₱ <?php echo isset($_SESSION['totalsold'])? number_format($_SESSION['totalsold']): '0' ?></h5>
                     </div>
                 </div>
             </main>

@@ -60,8 +60,6 @@
         else{
             $arrError[] = "2 Photos File are Required";
         }
-
-
         if(empty($product_name))
             $arrError[] = "PRoduct Name is Required";
         
@@ -115,27 +113,33 @@
 
                     }
                     if(isset($_SESSION['successDelete'])){
-                        echo
-                        '
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            Record Successfully deleted
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        ';
+                        if($_SESSION['successDelete'] === true){
+                            echo
+                            '
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                Record Successfully deleted
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            ';
+                            
+                        }
                         unset($_SESSION['successDelete']);
                     }
+
                     if(isset($_SESSION['successUpdate'])){
-                        echo
-                        '
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            Record updated successfully
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        ';
+                        if($_SESSION['successUpdate'] === true){
+                            echo
+                            '
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                Record updated successfully
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            ';
+                        }
                         unset($_SESSION['successUpdate']);
                     }
                 
@@ -190,12 +194,10 @@
                                 $con = openConnection();
                                 $strSQL = "SELECT * FROM tbl_products";
                                 $recProducts = getRecord($con, $strSQL);
-                                closeConnections($con);
                                 if(!empty($recProducts)){
 
                                     foreach ($recProducts as $key => $value) {
                                         $con = openConnection();
-                                        $strSQL = "SELECT * FROM tbl_products WHERE id = ".  $value['id'];
                                         $recProductsInfo = getRecord($con, $strSQL);
                                         echo '
                                         <tr>
@@ -203,7 +205,7 @@
                                             <td><img style="width: 2em" src="../img/' . $value['photo2']  . '"></td>
                                             <td>' .  $value['name'] . '</td>
                                             <td>' . $value['description'] . '</td>
-                                            <td>' . $value['price'] . '</td>
+                                            <td>₱ ' . number_format($value['price'])  . '</td>
                                             <td colspan="2">
                                                 <a href="update-product.php?k=' . $value['id'] . '" class="btn btn-sm btn-success"><i class=" fa fa-edit"></i> Edit</a> 
                                                 <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#exampleModalCenter"><i class=" fa fa-trash"></i> Remove</button>
@@ -219,12 +221,12 @@
                                                                     </button>
                                                                 </div>
                                                             <div class="modal-body">
-                                                                <p><b>Product Name: </b> ' .  $recProductsInfo[0]['name'] . ' </p>
-                                                                <p><b>Product Description: </b>' . $recProductsInfo[0]['description'] .  '</p>
-                                                                <p><b>Product Price: </b> ' .$recProductsInfo[0]['price'] . ' </p>
+                                                                <p><b>Product Name: </b> ' .  $value['name'] . ' </p>
+                                                                <p><b>Product Description: </b>' . $value['description'] .  '</p>
+                                                                <p><b>Product Price: </b> ' .$value['price'] . ' </p>
                                                             </div>
                                                                 <div class="modal-footer">
-                                                                    <a href="delete-product.php?k=' . $recProductsInfo[0]['id'] .'" class="btn btn-light" >Yes</a>
+                                                                    <a href="delete-product.php?k=' . $value['id'] . '" class="btn btn-light" >Yes</a>
                                                                     <button type="button" class="btn btn-dark" data-dismiss="modal">No</button>
                                                                 </div>
                                                             </div>
