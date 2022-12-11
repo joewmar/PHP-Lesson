@@ -23,41 +23,47 @@
         $arrAllowFiles = ['jpeg', 'jpg', 'png'];
         $uploadDIR = '../img/';
 
-        if(isset($_FILES['filePhoto1'])){
-            $fileName1 = $_FILES['filePhoto1']['name'];
-            $fileSize1 = $_FILES['filePhoto1']['size'];
-            $fileTemp1 = $_FILES['filePhoto1']['tmp_name'];
-            $fileType1 = $_FILES['filePhoto1']['type'];
 
-            $fileExtTemp1 = explode('.', $fileName1); // this become the array
-            $fileExt1 = strtolower(end($fileExtTemp1)); 
         
-            if(in_array($fileExt1, $arrAllowFiles) === false){
-                $arrError[] = "Photo 1: Extension File is not allowed, You can only choose a JPG or PNG file"; 
-            }
-            if(empty($arrError)){
-                unlink("../img/" . $recProducts[0]['photo1']);
-                $photo1 = $fileName1;
-                move_uploaded_file($fileTemp1, $uploadDIR . $fileName1);
-            }
+        if(isset($_FILES['filePhoto1'])){
+            if(!empty($_FILES['filePhoto1']['name'])){
+                $fileName1 = $_FILES['filePhoto1']['name'];
+                $fileSize1 = $_FILES['filePhoto1']['size'];
+                $fileTemp1 = $_FILES['filePhoto1']['tmp_name'];
+                $fileType1 = $_FILES['filePhoto1']['type'];
 
+                $fileExtTemp1 = explode('.', $fileName1); // this become the array
+                $fileExt1 = strtolower(end($fileExtTemp1)); 
+            
+                if(in_array($fileExt1, $arrAllowFiles) === false){
+                    $arrError[] = "Photo 1: Extension File is not allowed, You can only choose a JPG or PNG file"; 
+                }
+                if(empty($arrError)){
+                    unlink("../img/" . $recProducts[0]['photo1']);
+                    $photo1 = $fileName1;
+                    move_uploaded_file($fileTemp1, $uploadDIR . $fileName1);
+                }
+            }
         }
-        else if(isset($_FILES['filePhoto2'])){
-            $fileName2 = $_FILES['filePhoto2']['name'];
-            $fileSize2 = $_FILES['filePhoto2']['size'];
-            $fileTemp2 = $_FILES['filePhoto2']['tmp_name'];
-            $fileType2 = $_FILES['filePhoto2']['type'];
 
-            $fileExtTemp2 = explode('.', $fileName2); // this become the array
-            $fileExt2 = strtolower(end($fileExtTemp2)); 
-
-            if(in_array($fileExt2, $arrAllowFiles) === false){
-                $arrError[] = "Photo 2: Extension File is not allowed, You can only choose a JPG or PNG file"; 
-            }
-            if(empty($arrError)){
-                unlink("../img/" . $recProducts[0]['photo2']);
-                $photo2 = $fileName2;
-                move_uploaded_file($fileTemp2, $uploadDIR . $fileName2);
+        if(isset($_FILES['filePhoto2'])){
+            if(!empty($_FILES['filePhoto2']['name'])){
+                $fileName2 = $_FILES['filePhoto2']['name'];
+                $fileSize2 = $_FILES['filePhoto2']['size'];
+                $fileTemp2 = $_FILES['filePhoto2']['tmp_name'];
+                $fileType2 = $_FILES['filePhoto2']['type'];
+    
+                $fileExtTemp2 = explode('.', $fileName2); // this become the array
+                $fileExt2 = strtolower(end($fileExtTemp2)); 
+    
+                if(in_array($fileExt2, $arrAllowFiles) === false){
+                    $arrError[] = "Photo 2: Extension File is not allowed, You can only choose a JPG or PNG file"; 
+                }
+                if(empty($arrError)){
+                    unlink("../img/" . $recProducts[0]['photo2']);
+                    $photo2 = $fileName2;
+                    move_uploaded_file($fileTemp2, $uploadDIR . $fileName2);
+                }
             }
         }
 
@@ -150,7 +156,7 @@
                             <input type="file" name="filePhoto1" class="form-control-file" id="filePhoto1">
                         </div>
                         <div class="form-group col-12">
-                            <label for="filePhoto2">Photo 2 <?php echo $recProducts[0]['photo2']?></label>
+                            <label for="filePhoto2">Photo 2: <?php echo $recProducts[0]['photo2']?></label>
                             <input type="file" name="filePhoto2" class="form-control-file" id="filePhoto2">
                         </div>
                     </div>
