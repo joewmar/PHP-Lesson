@@ -1,7 +1,11 @@
 <?php
     session_start();
     require("../functions.php");
-  $amount = 0;
+    $sold = 0;
+    if(isset($_SESSION['totalsold'])){
+        $sold = $_SESSION['totalsold'];
+    }
+    $amount = 0;
     $itemQTYCount = 0;
     $itemID = 0;
     $itemSize = "";
@@ -11,11 +15,16 @@
     if(isset($_POST['btnUpdate'])){
         foreach($_POST['numQTY'] as $key => $value){
             $_SESSION['cartItems'][$key + 1]['qty'] = $value;
+            
         }
     }
 
     if(isset($_POST['btnCheckout'])){
-        session_destroy();
+        $sold +=  $_SESSION['tempAmount'];
+        $_SESSION['totalsold'] = $sold;
+        unset($_SESSION['cartItems']);
+        unset($_SESSION['cartCount']);
+        unset($_SESSION['tempAmount']);
         header("Location: clear.php");
     }
 
@@ -51,6 +60,7 @@
                                         $itemQty = $_SESSION['cartItems'][$CartKey]['qty'];                                       
                                         $itemTotal = $arrRecProducts[0]['price'] * $itemQty;
                                         $amount += $itemTotal;
+                                        $_SESSION['tempAmount'] = $amount;
                                         $itemQTYCount += $itemQty;
                                         closeConnections($con);
 

@@ -28,11 +28,16 @@
 
         if(empty($confirmpassword))
             $arrError[] = "Confirm Password is Required";    
+  
+
+        $strSQLSELECT = "SELECT * FROM tbl_user WHERE username = 'admin' AND password = '$oldpassword'";
+        $recUser = getRecord($con, $strSQLSELECT);
+
+        if(empty($recUser))
+            $arrError[] = "Your old password is wrong";    
 
         if($newpassword != $confirmpassword)
-            $arrError[] = "Your password is doesn't match";          
-
-                // Next time tuloy mo yun arrError printing
+            $arrError[] = "Your password is doesn't match";  
 
         if(empty($arrError) && $newpassword == $confirmpassword){
             // Inserting Multiple Rows
@@ -52,6 +57,7 @@
 
             closeConnections($con);
         }
+
         
     }
 ?>
@@ -60,8 +66,26 @@
         <div class="row">
             <?php require_once("nav.php")?>
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-                <?php
-            
+            <?php
+                    if(!empty($arrError)){
+                        foreach ($arrError as $key => $value) {
+                            echo 
+                            '
+                            
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong>Error: </strong>
+                                <ul>
+                                    <li>' . $value . '</li>
+                                </ul>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            
+                            ';
+                        }
+
+                    }
                     if($sucessAlert === true){
                         echo 
                         '
@@ -84,7 +108,7 @@
                     <div class="form-row">
                         <div class="form-group col-12">
                             <label for="txtProductPrice"> Username <span class="text-danger">*</span></label>
-                            <input type="text" name="txtUsername" class="form-control" id="txtProductPrice"required readonly value="admin">
+                            <input type="text" name="txtUsername" class="form-control" id="txtProductPrice"required readonly value="<?php echo $_SESSION['username']?>">
                         </div>
                         <div class="form-group col-12">
                             <label for="txtOldPassword">Old Password <span class="text-danger">*</span></label>
